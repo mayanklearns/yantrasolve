@@ -108,7 +108,9 @@ async def solve_quiz_task(
             )
 
             logger.info(f"Quiz processing completed for {email}")
-            logger.info(f"Completed Urls: {json.dumps(result.get('completed_urls', []), indent=2)}")
+            logger.info(
+                f"Completed Urls: {json.dumps(result.get('completed_urls', []), indent=2)}"
+            )
 
         except asyncio.TimeoutError:
             logger.error(f"Quiz processing timed out for {email}")
@@ -140,7 +142,11 @@ async def receive_quiz(request: QuizRequest, background_tasks: BackgroundTasks):
 
     # Spawn background task
     background_tasks.add_task(
-        solve_quiz_task, request.email, request.secret, request.url, global_resources
+        solve_quiz_task,
+        request.email,
+        request.secret,
+        str(request.url),  # Convert HttpUrl to str for serialization
+        global_resources,
     )
 
     logger.info(f"Quiz task started for {request.url}")

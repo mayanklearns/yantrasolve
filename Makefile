@@ -1,5 +1,5 @@
 # Makefile
-.PHONY: start test format lint help
+.PHONY: start test format lint help clean
 
 # Run FastAPI locally
 start:
@@ -11,11 +11,16 @@ test:
 
 # Format code
 format:
-	uv run black src tests
+	uv run black app tests
 
 # Lint code
 lint:
-	uv run ruff check src tests
+	uv run ruff check app tests
+
+clean:
+	find . -type d -name "__pycache__" -exec rm -rf {} +
+	rm -rf .pytest_cache
+	rm -rf .ruff_cache
 
 # Show help
 help:
