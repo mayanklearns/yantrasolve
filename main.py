@@ -14,7 +14,6 @@ import hmac
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Manage global resources for the application lifetime."""
-    logger.info("Application startup: Initializing global resources...")
 
     global_resources = GlobalResources()
     await global_resources.initialize()  # Initialize global resources just once
@@ -39,6 +38,7 @@ app = FastAPI(
     title="LLM Analysis Quiz Solver",
     description="Intelligent quiz solver using LangGraph and LLMs",
     version="0.1.0",
+    lifespan=lifespan,
 )
 
 

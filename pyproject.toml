@@ -9,6 +9,7 @@ authors = [
   { name = "Mayank Kumar Poddar", email = "23f3004197@ds.study.iitm.ac.in" },
 ]
 dependencies = [
+    "playwright>=1.56.0",
     "uvicorn>=0.38.0",
 ]
 [project.urls]

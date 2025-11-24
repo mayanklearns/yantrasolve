@@ -1,4 +1,6 @@
+import hashlib
 from pathlib import Path
+from typing import Any
 from app.config.settings import settings
 import time
 import asyncio
@@ -84,3 +86,23 @@ async def retry_with_backoff(
                 f"Retry {attempt}/{max_retries} after {total_delay:.2f}s due to: {e}"
             )
             await asyncio.sleep(total_delay)
+
+
+def hash_content(content: Any) -> str:
+    """
+    Generate hash.
+
+    Args:
+        content: Content to hash (will be converted to string)
+
+    Returns:
+        SHA256 hash as hex string
+    """
+    if isinstance(content, bytes):
+        content_bytes = content
+    elif isinstance(content, str):
+        content_bytes = content.encode("utf-8")
+    else:
+        content_bytes = str(content).encode("utf-8")
+
+    return hashlib.sha256(content_bytes).hexdigest()
