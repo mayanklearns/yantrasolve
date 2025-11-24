@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 from pydantic_settings import BaseSettings
+from pydantic import ConfigDict
 
 
 class Config(BaseSettings):
@@ -15,9 +16,13 @@ class Config(BaseSettings):
     CACHE_DIR: Path = Path(os.getenv("CACHE_DIR", "/tmp/quiz_cache"))
     LOGS_DIR: Path = Path(os.getenv("LOGS_DIR", "/tmp/quiz_logs"))
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    LLM_API_KEY: str = os.getenv("LLM_API_KEY", "your-openai-api-key")
+    LLM_BASE_URL: str = os.getenv("LLM_BASE_URL", "https://api.openai.com/v1")
+    LLM_MODEL: str = "gpt-5-mini"
+    LLM_PROVIDER: str = "openai"  # or anthropic or google
+    LLM_TEMPERATURE: float = 0.1
+
+    model_config = ConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 
 settings = Config()

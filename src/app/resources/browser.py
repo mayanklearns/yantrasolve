@@ -1,10 +1,7 @@
-import asyncio
 from typing import Optional
-from playwright.async_api import async_playwright, Browser, Page, Playwright
+from playwright.async_api import async_playwright, Browser, Playwright
 
-from app.utils.helpers import hash_content, logger
-
-from app.config import settings
+from app.utils.helpers import logger
 
 
 class BrowserClient:
@@ -30,11 +27,13 @@ class BrowserClient:
             # Launch browser
             self.browser = await self.playwright.chromium.launch(
                 headless=True,
-                args=["--disable-blink-features=AutomationControlled"], # Avoid detection
+                args=[
+                    "--disable-blink-features=AutomationControlled"
+                ],  # Avoid detection
             )
 
             self._initialized = True
-            
+
         except Exception as e:
             logger.error(f"Failed to initialize browser: {e}")
             raise
