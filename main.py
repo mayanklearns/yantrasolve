@@ -7,6 +7,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr, HttpUrl
 from app.graph.resources import GlobalResources
 from app.graph.state import QuizState
+from app.tools.submit_answer import submit_answer_tool
+from app.tools.python import python_tool
+from app.tools.javascript import javascript_tool
+
 from app.utils.helpers import cleanup_temp_files, setup_temp_directory
 from app.utils.logging import logger
 from app.config.settings import settings
@@ -94,6 +98,7 @@ async def solve_quiz_task(
             "email": email,
             "secret": secret,
             "current_url": url,
+            "tools": [python_tool, javascript_tool, submit_answer_tool],
             "resources": resources,
         }
 

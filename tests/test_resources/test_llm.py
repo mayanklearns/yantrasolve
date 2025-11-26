@@ -95,7 +95,7 @@ class TestLLMClient:
         result = await client.chat(messages, tools=tools)
 
         assert result == mock_response
-        mock_client.bind_tools.assert_called_once_with(tools, strict=True)
+        mock_client.bind_tools.assert_called_once_with(tools)
         mock_bound_client.ainvoke.assert_called_once_with(messages, temperature=0.1)
 
     @pytest.mark.asyncio
