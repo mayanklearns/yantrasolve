@@ -136,7 +136,7 @@ async def solve_quiz_task(
         # Execute the graph with timeout
         try:
             result = await asyncio.wait_for(
-                graph.ainvoke(initial_state, {"recursion_limit": 500}),
+                graph.ainvoke(initial_state, {"recursion_limit": 5000}),
                 timeout=60 * 60,  # 1 hour
             )
 
